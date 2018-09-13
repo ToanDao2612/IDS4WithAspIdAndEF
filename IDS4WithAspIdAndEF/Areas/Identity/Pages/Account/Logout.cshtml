@@ -1,0 +1,29 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+</header>
+@if (Model.ShowLogoutPrompt)
+{
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Would you like to logout of IdentityServer?</p>
+            <form method="post">
+                <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+                <fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Yes</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <p>You have successfully logged out of the application.</p>
+}
