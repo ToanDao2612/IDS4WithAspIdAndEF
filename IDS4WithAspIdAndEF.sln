@@ -11,6 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDS4WithAspIdAndEF.SampleCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDS4WithAspIdAndEF.SampleMvc", "IDS4WithAspIdAndEF.SampleMvc\IDS4WithAspIdAndEF.SampleMvc.csproj", "{3B893E88-D236-4C4F-AA93-D11159CBD407}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8EA8C96-BF32-47A7-87C3-63FE18F2F84A}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

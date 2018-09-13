@@ -63,7 +63,6 @@ namespace IDS4WithAspIdAndEF.Areas.Identity.Pages.Account
                 returnUrl = logout?.PostLogoutRedirectUri;
             }
 
-            // Local Logout
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
 

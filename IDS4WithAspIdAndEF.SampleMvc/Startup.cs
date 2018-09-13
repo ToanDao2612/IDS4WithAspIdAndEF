@@ -49,31 +49,31 @@ namespace IDS4WithAspIdAndEF.SampleMvc
                 options.DefaultScheme = "Cookies";
                 options.DefaultChallengeScheme = "oidc";
             })
-                .AddCookie("Cookies")
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.SignInScheme = "Cookies";
+            .AddCookie("Cookies")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.SignInScheme = "Cookies";
 
-                    options.Authority = "https://localhost:5000";
-                    options.RequireHttpsMetadata = false;
-                    options.Events.OnRemoteFailure = ctx =>
-                        {
-                            ctx.Response.Redirect("/Home/Error?errorMessage=" + UrlEncoder.Default.Encode(ctx.Failure.Message));
-                            ctx.HandleResponse();
-                            return Task.FromResult(0);
-                        
+                options.Authority = "https://localhost:5000";
+                options.RequireHttpsMetadata = false;
+                options.Events.OnRemoteFailure = ctx =>
+                    {
+                        ctx.Response.Redirect("/Home/Error?errorMessage=" + UrlEncoder.Default.Encode(ctx.Failure.Message));
+                        ctx.HandleResponse();
+                        return Task.FromResult(0);
+
                     };
 
-                    options.ClientId = "hacc.Client";
-                    options.ClientSecret = "hacc.Client.Secret";
-                    options.ResponseType = "code id_token";
+                options.ClientId = "hacc.Client";
+                options.ClientSecret = "hacc.Client.Secret";
+                options.ResponseType = "code id_token";
 
-                    options.SaveTokens = true;
-                    options.GetClaimsFromUserInfoEndpoint = true;
+                options.SaveTokens = true;
+                options.GetClaimsFromUserInfoEndpoint = true;
 
-                    options.Scope.Add("Front.API.All");
-                    options.Scope.Add("offline_access");
-                });
+                options.Scope.Add("Front.API.All");
+                options.Scope.Add("offline_access");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +99,7 @@ namespace IDS4WithAspIdAndEF.SampleMvc
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-        
+
         }
     }
 }
