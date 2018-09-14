@@ -69,6 +69,10 @@ namespace IDS4WithAspIdAndEF.SampleMvc.Controllers
             var content = await client.GetStringAsync("http://localhost:5001/api/identity");
 
             ViewBag.Json = JArray.Parse(content).ToString();
+
+            content = await client.GetStringAsync("https://localhost:5000/api/values");
+            ViewBag.Json += JArray.Parse(content).ToString();
+
             return View("Json");
         }
 
@@ -81,6 +85,10 @@ namespace IDS4WithAspIdAndEF.SampleMvc.Controllers
             var content = await client.GetStringAsync("http://localhost:5001/api/identity");
 
             ViewBag.Json = JArray.Parse(content).ToString();
+
+            content = await client.GetStringAsync("https://localhost:5000/api/values");
+            ViewBag.Json += JArray.Parse(content).ToString();
+
             return View("Json");
         }
     }

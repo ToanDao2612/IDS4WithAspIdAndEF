@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using IDS4WithAspIdAndEF.Areas.Identity.Services;
 using IdentityServer4;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using IdentityServer4.Contrib.LocalAccessTokenValidation;
 
 namespace IDS4WithAspIdAndEF
 {
@@ -87,8 +89,14 @@ namespace IDS4WithAspIdAndEF
             if (Environment.IsDevelopment())
             {
                 builder.AddDeveloperSigningCredential();
-            }
+            }            
             services.AddAuthentication()
+                //.AddIdentityServerAuthentication(options=> {
+                //    options.Authority = "https://localhost:5000";
+                //    options.RequireHttpsMetadata = false;
+                //    options.ApiName = "Front.API";
+                //})
+                .AddLocalAccessTokenValidation()
                 .AddGoogle("Google", options =>
                 {
                     //options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
@@ -153,7 +161,7 @@ namespace IDS4WithAspIdAndEF
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            //app.UseAuthentication();
+            //app.UseAuthentication(); // app.UseIdentityServer() will run it automatically.
             app.UseIdentityServer();
 
             app.UseMvc(routes =>

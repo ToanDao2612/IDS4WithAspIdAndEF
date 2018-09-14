@@ -58,9 +58,20 @@ namespace IDS4WithAspIdAndEF.SampleConsole
                 Console.WriteLine(JArray.Parse(content));
             }
 
+            response = await client.GetAsync("https://localhost:5000/api/values");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(JArray.Parse(content));
+            }
 
-            // request token
-            tokenClient = new TokenClient(disco.TokenEndpoint, "ro.Client", "ro.Client.Secret");
+
+                // request token
+                tokenClient = new TokenClient(disco.TokenEndpoint, "ro.Client", "ro.Client.Secret");
             tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("alice", "Pass123$", "Front.API.All");
 
             if (tokenResponse.IsError)
@@ -78,6 +89,17 @@ namespace IDS4WithAspIdAndEF.SampleConsole
             client.SetBearerToken(tokenResponse.AccessToken);
 
             response = await client.GetAsync("http://localhost:5001/api/identity");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            else
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                Console.WriteLine(JArray.Parse(content));
+            }
+
+            response = await client.GetAsync("https://localhost:5000/api/values");
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine(response.StatusCode);
