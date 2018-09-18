@@ -19,6 +19,7 @@ using IdentityServer4;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using IdentityServer4.Contrib.LocalAccessTokenValidation;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 namespace IDS4WithAspIdAndEF
 {
@@ -91,11 +92,12 @@ namespace IDS4WithAspIdAndEF
                 builder.AddDeveloperSigningCredential();
             }            
             services.AddAuthentication()
-                //.AddIdentityServerAuthentication(options=> {
-                //    options.Authority = "https://localhost:5000";
-                //    options.RequireHttpsMetadata = false;
-                //    options.ApiName = "Front.API";
-                //})
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "Front.API";
+                })
                 .AddLocalAccessTokenValidation()
                 .AddGoogle("Google", options =>
                 {
@@ -138,6 +140,12 @@ namespace IDS4WithAspIdAndEF
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
+
             // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddTransient<IEmailSender, MessageSender>();
             services.AddTransient<ISmsSender, MessageSender>();
@@ -160,6 +168,7 @@ namespace IDS4WithAspIdAndEF
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSpaStaticFiles();
 
             //app.UseAuthentication(); // app.UseIdentityServer() will run it automatically.
             app.UseIdentityServer();
@@ -169,6 +178,20 @@ namespace IDS4WithAspIdAndEF
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }

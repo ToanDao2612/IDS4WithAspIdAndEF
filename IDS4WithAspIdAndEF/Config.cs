@@ -154,7 +154,38 @@ namespace IDS4WithAspIdAndEF
                     Claims = {
                         new Claim("hacc.Client.PKEY", "hacc.Client.PValue"),
                     }
+                },
+
+                 new Client
+                {
+                    ClientId = "spa.Client",
+                    ClientName = "Angular Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    ClientSecrets =
+                    {
+                        new Secret("spa.Client.Secret".Sha256(), "spa.Client.Secret", null)
+                    },
+
+                    RedirectUris = { "https://localhost:5000/ClientApp" },
+                    PostLogoutRedirectUris = { "https://localhost:5000/ClientApp" },
+                    AlwaysSendClientClaims = true,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "Front.API.All",
+                        IdentityServerConstants.StandardScopes.OfflineAccess
+                    },
+                    AllowOfflineAccess = true,
+                    AllowAccessTokensViaBrowser = true,
+                    Properties = {
+                        { "ClientType", "Angular SPA"}
+                    },
+                    Claims = {
+                        new Claim("spa.Client.PKEY", "spa.Client.PValue"),
+                    }
                 }
+
             };
         }
 

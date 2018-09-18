@@ -1,0 +1,18 @@
+<h1>Security Values</h1>
+
+<p>This component demonstrates fetching data from the server need token.</p>
+
+<p *ngIf="!values"><em>Loading...</em></p>
+
+<table class='table' *ngIf="values">
+  <thead>
+    <tr>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let value of values">
+      <td>{{ value }}</td>
+    </tr>
+  </tbody>
+</table>
